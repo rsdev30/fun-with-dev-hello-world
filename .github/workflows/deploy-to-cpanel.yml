@@ -1,0 +1,50 @@
+name: Build and deploy to cPanel
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: hello-angular-app
+
+      - name: Build Angular app
+        run: npm run build --if-present
+        working-directory: hello-angular-app
+
+      - name: Show build output (debug)
+        run: |
+          echo "Contents of dist/":
+          ls -la hello-angular-app/dist || true
+
+      - name: Deploy to cPanel via FTP/FTPS
+        uses: SamKirkland/ftp-deploy-action@4.4.0
+        with:
+          server: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          # Optional: set a port secret (default 21)
+          port: ${{ secrets.CPANEL_PORT }}
+          local-dir: hello-angular-app/dist/hello-angular-app
+          server-dir: ${{ secrets.CPANEL_TARGET_DIR }}
+          protocol: ftps
+
+# Required repository secrets:
+# - CPANEL_HOST        (hostname or IP of your cPanel server)
+# - CPANEL_USERNAME    (FTP username)
+# - CPANEL_PASSWORD    (FTP password)
+# - CPANEL_TARGET_DIR  (target directory on the server, e.g. /public_html)
+# Optional secret:
+# - CPANEL_PORT        (FTP port, default 21)
