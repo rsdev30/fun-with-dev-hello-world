@@ -30,7 +30,7 @@ jobs:
           ls -la hello-angular-app/dist || true
 
       - name: Deploy to cPanel via FTP/FTPS
-        uses: SamKirkland/ftp-deploy-action@4.4.0
+        uses: SamKirkland/ftp-deploy-action@v4.4.0
         with:
           server: ${{ secrets.CPANEL_HOST }}
           username: ${{ secrets.CPANEL_USERNAME }}
