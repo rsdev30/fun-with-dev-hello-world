@@ -33,7 +33,7 @@
     "@angular/router": "^21.0.0",
     "@angular/ssr": "^21.0.4",
     "express": "^5.1.0",
-    "ftp-deploy-action": "github:SamKirkland/ftp-deploy-action@v4.3.0",
+    "ftp-deploy-action": "SamKirkland/ftp-deploy-action@v4.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
