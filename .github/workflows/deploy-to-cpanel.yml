@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.CPANEL_PASSWORD }}
           # Optional: set a port secret (default 21)
           port: ${{ secrets.CPANEL_PORT }}
-          local-dir: hello-angular-app/dist/hello-angular-app
+          local-dir: hello-angular-app/dist/hello-angular-app/
           server-dir: ${{ secrets.CPANEL_TARGET_DIR }}
           protocol: ftps
 
